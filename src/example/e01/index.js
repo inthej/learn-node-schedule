@@ -1,7 +1,7 @@
 const Rx = require('rxjs')
-const PostService = require('../common/service/PostService')
+const PostService = require('../../common/service/PostService')
 
-/* 관찰 가능한 API 리스트 호출 */
+/* Observable 리스트 호출 */
 
 const searchList = () => {
   const postService = PostService.getInstance()

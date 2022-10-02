@@ -1,5 +1,7 @@
-const PostService = require('../common/service/PostService')
-const ValueUtils = require('../common/util/ValueUtils')
+const PostService = require('../../common/service/PostService')
+const ArrayUtils = require('../../common/util/ArrayUtils')
+
+/* 리스트 분할 API 호출 */
 
 async function searchPosts() {
   const postService = PostService.getInstance()
@@ -24,7 +26,7 @@ async function editPost(id, item) {
 const resultMap = new Map()
 async function start() {
   const list = await searchPosts()
-  const chunks = ValueUtils.chunks(list, 40)
+  const chunks = ArrayUtils.chunks(list, 40)
   for await (const arr of chunks) {
     const res = await Promise.all(arr.map(item => {
       const obj = {

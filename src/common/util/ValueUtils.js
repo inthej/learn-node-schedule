@@ -1,28 +1,39 @@
-class ValueUtils {
-  static chunks(arr = [], size) {
-    const result = []
-    let elements = []
-    let count = 1
-    for (const [idx, ele] of arr.entries()) {
-      const isLastIdx = arr.length - 1
-      if (idx === isLastIdx) {
-        elements.push(ele)
-        result.push(elements)
-        break
-      }
+const moment = require('moment')
+moment.locale('ko')
 
-      if (count === size) {
-        elements.push(ele)
-        result.push(elements)
-        elements = []
-        count = 1
-        continue
-      } 
-        
-      elements.push(ele)
-      count++
-    }
-    return result
+class ValueUtils {
+  constructor() {
+    throw new Error()
+  }
+
+  static empty(str, includeBlank = true) {
+    const empty = str === null || str === undefined || (includeBlank && str === '')
+    return empty
+  }
+
+  static nonEmpty(str, includeBlank = true) {
+    return !ValueUtils.empty(str, includeBlank)
+  }
+
+  static nvl(str, defaultValue = '') {
+    if (ValueUtils.empty(str)) { return defaultValue }
+    return str
+  }
+
+  /** Date */
+  static dt(str) {
+    return moment(str)
+  }
+
+  static dt2from(str, format = 'YYYY-MM-DD HH:mm:ss') {
+    if (ValueUtils.empty(str)) { return null }
+    const dt = ValueUtils.dt(str)
+    return dt.format(format)
+  }
+
+  static now(format = 'YYYY-MM-DD HH:mm:ss') {
+    const dt = ValueUtils.dt()
+    return ValueUtils.dt2from(dt, format)
   }
 }
 
